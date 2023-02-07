@@ -12,5 +12,6 @@ dependencies {
 	api "com.axelor.apps:axelor-stock:${aosVersion}"	
 	api "com.axelor.apps:axelor-sale:${aosVersion}"	
 	api "com.axelor.apps:axelor-purchase:${aosVersion}"	
-
+	api "com.axelor.apps:axelor-project:${aosVersion}"
+	api "com.axelor.apps:axelor-human-resource:${aosVersion}"
 }
