@@ -8,9 +8,9 @@
 # ~~~~~
 db.default.driver = org.postgresql.Driver
 db.default.ddl = update
-db.default.url = jdbc:postgresql://localhost:5432/inventory-app
-db.default.user = openauction
-db.default.password = niotcua
+db.default.url = jdbc:postgresql://localhost:5432/******
+db.default.user = ******
+db.default.password = *****
 
 # Application Information
 # ~~~~~
