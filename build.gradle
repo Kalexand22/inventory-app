@@ -18,7 +18,7 @@ buildscript {
   }
   ext.openPlatformVersion = '5.4.15'
   ext.appVersion = '0.0.1'
-  ext.aosVersion = '6.3.0-beta'
+  ext.aosVersion = '6.4.5'
   
   repositories repos
   dependencies {
