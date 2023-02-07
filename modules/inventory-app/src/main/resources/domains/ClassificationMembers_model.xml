@@ -6,7 +6,7 @@
   <entity name="ClassificationMembers">
     <many-to-one name="classificationCode" title="Code classification"
       ref="com.axelor.apps.openauction.db.Classification"/>
-    <string name="memberCode" title="Code"/>
+    <string name="code" title="Code"/>
     <string name="presentationOrder" title="Ordre de presentation"/>
     <many-to-one name="parentMemberCode" title="Code membre parent"
       ref="com.axelor.apps.openauction.db.ClassificationMembers"/>

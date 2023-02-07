@@ -4,14 +4,12 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="openauction" package="com.axelor.apps.openauction.db"/>
   <entity name="ClassificationLot">
-    <many-to-one name="lotNo" title="N° lot" ref="com.axelor.apps.openauction.db.Lot"/>
+    <many-to-one name="missionLine" title="N° ligne de mission" ref="com.axelor.apps.openauction.db.MissionLine"/>
     <integer name="category1" title="Thème 1"/>
     <integer name="category2" title="Thème 2"/>
     <integer name="category3" title="Thème 3"/>
     <integer name="category4" title="Thème 4"/>
     <many-to-one name="productFamily" title="Famille comptable de produit"
       ref="com.axelor.apps.base.db.ProductFamily"/>
-    <boolean name="highlightedLot" title="Lot phare"/>
-    <boolean name="webDiffusion" title="Diffusion Internet"/>
   </entity>
 </domain-models>

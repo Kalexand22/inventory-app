@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+  <module name="openauction" package="com.axelor.apps.openauction.db"/>
+  <entity name="Sector">
+    <string name="code" title="Code"/>
+    <string name="description" title="Désignation" namecolumn="true"/>
+    <boolean name="active" title="Actif"/>
+    <boolean name="automotive" title="Automobile"/>
+    <boolean name="equipment" title="Matériel"/>
+    <boolean name="artObject" title="Objets d'art"/>
+    <many-to-one name="lotClassification1" title="Classification Lot 1"
+      ref="com.axelor.apps.openauction.db.Classification"/>
+    <many-to-one name="lotClassification2" title="Classification Lot 2"
+      ref="com.axelor.apps.openauction.db.Classification"/>
+    <many-to-one name="lotClassification3" title="Classification Lot 3"
+      ref="com.axelor.apps.openauction.db.Classification"/>
+    <many-to-one name="lotClassification4" title="Classification Lot 4"
+      ref="com.axelor.apps.openauction.db.Classification"/>
+  </entity>
+</domain-models>

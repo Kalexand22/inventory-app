@@ -4,21 +4,12 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="openauction" package="com.axelor.apps.openauction.db"/>
   <entity name="LotNature">
-    <string name="lotNature" title="Nature lot"/>
+    <string name="code" title="Nature lot"/>
+    <string name="description" title="Désignation" namecolumn="true"/>
     <many-to-one name="sectorCode" title="Code secteur"
       ref="com.axelor.apps.openauction.db.Sector"/>
     <many-to-one name="specializingCode" title="Code spécialité"
-      ref="com.axelor.apps.openauction.db.Specializing"/>
-    <many-to-one name="defaultExpert" title="Expert par défaut"
-      ref="com.axelor.apps.base.db.Partner"/>
-    <integer name="auctionAverageTime" title="Temps moyen vente (sec)"/>
-    <integer name="averageCatalogPages" title="Nombre moyen de pages catalogue"/>
-    <boolean name="valueSearch" title="Recherche valeur"/>
-    <string name="searchMethod" title="Mode recherche"/>
-    <string name="description" title="Désignation" namecolumn="true"/>
-    <string name="lotCardFormName" title="Nom formulaire fiche lot"/>
-    <string name="lotTemplCardFormName" title="Nom formulaire fiche modèle de lot"/>
-    <string name="inputJournalFormName" title="Nom formulaire saisie lot"/>
+      ref="com.axelor.apps.openauction.db.Specializing"/>    
     <boolean name="automotive" title="Automobile"/>
     <boolean name="equipment" title="Matériel"/>
     <boolean name="artObject" title="Objets d'art"/>

@@ -7,8 +7,8 @@
 
   <entity name="App" lang="java" cacheable="true">
 
-    <one-to-one ref="com.axelor.apps.openauction.db.AppOpenAuctionBase"
-      name="appOpenAuctionBase" mappedBy="app"/>
+    <one-to-one ref="com.axelor.apps.openauction.db.AppInventoryMobile"
+      name="appInventoryMobile" mappedBy="app"/>
 
   </entity>
 

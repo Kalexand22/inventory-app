@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models
+  xmlns:xsi=http://www.w3.org/2001/XMLSchema-instance
+  xsi:schemaLocation=http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+  <module name="openauction" package="com.axelor.apps.openauction.db"/>
+  <entity name="MissionLine">
+    <many-to-one name="missionNo" title="Mission"
+      ref="com.axelor.apps.openauction.db.MissionHeader"/>
+    <integer name="lineNo" title="N° ligne"/>    
+      
+    <string name="description" title="Désignation"/>
+   
+    <integer name="lotStatus" title="Statut lot" selection="openauction.lotStatus.select"/>
+    <decimal name="quantity" title="Quantité"/>
+    
+    <many-to-one name="lotCondition" title="Condition lot"
+      ref="com.axelor.apps.openauction.db.LotCondition"/>
+                  
+    <boolean name="canceled" title="Annulé"/>
+    <many-to-one name="canceledReason" title="Motif Annulation"
+      ref="com.axelor.apps.openauction.db.CanceledReason"/>
+    
+    <many-to-one name="lotNatureCode" title="Nature lot"
+      ref="com.axelor.apps.openauction.db.LotNature"/>
+     <many-to-one name="location" title="Emplacement"
+      ref="com.axelor.apps.openauction.db.Location"/>
+                  
+                  
+    <decimal name="lowEstimate" title="Estimation basse"/>
+    <decimal name="highEstimate" title="Estimation haute"/>
+
+    <string name="inventoryComment" title="Commentaire inventaire"/>
+   
+    <one-to-many name="pictureList" ref="com.axelor.apps.openauction.db.PictureAttachement"
+      mappedBy="sourceMissionLine"/> 
+  </entity>
+</domain-models>

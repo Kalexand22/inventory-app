@@ -3,10 +3,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="openauction" package="com.axelor.apps.openauction.db"/>
-
-
-  <entity name="ContactBusinessRelation">
-    <string name="contactNo"/>
-    <string name="businessRelationCode"/>
+  <entity name="Specializing">    
+    <string name="code" title="Code spécialité" unique="true"/>
+    <string name="description" title="Désignation" namecolumn="true"/>
+    <boolean name="active" title="Actif"/>
+    <many-to-one name="sectorCode" title="Code secteur"
+      ref="com.axelor.apps.openauction.db.Sector"/>
   </entity>
 </domain-models>

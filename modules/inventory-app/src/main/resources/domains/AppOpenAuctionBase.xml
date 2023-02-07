@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="openauction" package="com.axelor.apps.openauction.db"/>
-  <entity name="AppOpenAuctionBase">
+  <entity name="AppInventoryMobile">
     <one-to-one ref="com.axelor.apps.base.db.App" name="app"/>
   </entity>
 </domain-models>
