@@ -4,6 +4,6 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="openauction" package="com.axelor.apps.openauction.db"/>
   <entity name="LotCondition">
-    <string name="condition" title="Condition du lot"/>
+    <string name="conditionLot" title="Condition du lot"/>
   </entity>
 </domain-models>
