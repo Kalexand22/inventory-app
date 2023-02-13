@@ -27,7 +27,7 @@
                   
                   
     <decimal name="lowEstimate" title="Estimation basse"/>
-    
+
     <decimal name="highEstimate" title="Estimation haute"/>
 
     <string name="inventoryComment" title="Commentaire inventaire"/>

@@ -29,7 +29,12 @@
     model="com.axelor.apps.openauction.db.LotNature">
     <view type="grid" name="lot-nature-grid"/>
     <view type="form" name="lot-nature-form"/>
+  </action-view>
 
+  <action-view name="nature.all" title="Liste des natures de lot"
+    model="com.axelor.apps.openauction.db.LotNature">
+    <view type="grid" name="lot-nature-grid"/>
+    <view type="form" name="lot-nature-form"/>
   </action-view>
 
   <menuitem name="menu-mission-inventaire-all" parent="menu-mission"
