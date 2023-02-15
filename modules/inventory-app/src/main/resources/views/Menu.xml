@@ -36,9 +36,17 @@
   title="Liste des missions d'inventaire" action="mission.inventaire.all"/>
   <action-view name="mission.inventaire.all" title="Liste des missions"
     model="com.axelor.apps.openauction.db.MissionHeader">
-    <view type="grid" name="mission-header-grid"/>
+    <view type="grid" name="mission-header-grid"/> 
     <view type="form" name="mission-header-form" />
   </action-view>
 
+
+  <menuitem name="menu-photo-all" parent="menu-mission"
+  title="Liste des photos" action="mission.photo.all"/>
+  <action-view name="mission.photo.all" title="Liste des photos"
+    model="com.axelor.apps.openauction.db.PictureAttachement">
+    <view type="grid" name="picture-attachement-grid"/>
+    <view type="form" name="picture-attachement-form" />
+  </action-view>
 
 </object-views>

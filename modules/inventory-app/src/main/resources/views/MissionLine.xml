@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  <form name="mission-line-form" title="Mission line" model="com.axelor.apps.openauction.db.MissionLine" width="large">
+    <panel title="Overview">
+      <field name="missionNo"/>
+      <field name="lineNo"/>
+      <field name="description"/>
+      <field name="lotStatus"/>
+      <field name="quantity"/>
+      <field name="lotCondition"/>
+      <field name="canceled"/>
+      <field name="canceledReason"/>
+      <field name="lotNatureCode"/>
+      <field name="location"/>
+      <field name="lowEstimate"/>
+      <field name="highEstimate"/>
+      <field name="inventoryComment"/>
+    </panel>
+    <panel name="photos" title="Photos">
+        <button name="addPhoto" title="Ajouter une photo" onClick="action-add-picture" icon="fa-image" colSpan="2"/> 
+        <panel-dashlet name="photosCard" colSpan="12" field="pictureList"
+        action="action-album-show-photos" height="600"/>
+      </panel>
+      <panel-related field="pictureList"></panel-related>
+  </form>
+</object-views>

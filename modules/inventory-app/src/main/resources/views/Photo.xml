@@ -22,7 +22,7 @@
 
   <action-view name="action-photo-show-editor" title="Editeur d'image">
     <view type="html"
-      name="image-editor?id={{id}}&amp;model=com.axelor.apps.openauction.db.PictureAttachement&amp;metaFileField=picture&amp;projectName=auction-art&amp;language={{_language}}"/>
+      name="image-editor?id={{id}}&amp;model=com.axelor.apps.openauction.db.PictureAttachement&amp;metaFileField=picture&amp;projectName=inventory-apps&amp;language={{_language}}"/>
     <view-param name="popup" value="reload"/>
     <view-param name="popup.maximized" value="true"/>
     <view-param name="forceEdit" value="true"/>
@@ -61,7 +61,7 @@
     <view-param name="show-confirm" value="false"/>
     <view-param name="show-toolbar" value="false"/>
     <view-param name="popup.maximized" value="true"/>
-    <domain>self.sourceLotNo.id = :id</domain>
+    <domain>self.sourceMissionLine.id = :id</domain>
     <context name="_lot" expr="eval: __this__"/>
   </action-view>
 
