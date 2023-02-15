@@ -27,6 +27,7 @@
                   
                   
     <decimal name="lowEstimate" title="Estimation basse"/>
+    
     <decimal name="highEstimate" title="Estimation haute"/>
 
     <string name="inventoryComment" title="Commentaire inventaire"/>
@@ -34,4 +35,5 @@
     <one-to-many name="pictureList" ref="com.axelor.apps.openauction.db.PictureAttachement"
       mappedBy="sourceMissionLine"/> 
   </entity>
+
 </domain-models>
