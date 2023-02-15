@@ -25,7 +25,7 @@
   </action-view>
 
 
-  <action-view name="nature.all" title="Liste des natures de lot"
+  <action-view name="nature.all" title="Liste des natures de lot" 
     model="com.axelor.apps.openauction.db.LotNature">
     <view type="grid" name="lot-nature-grid"/>
     <view type="form" name="lot-nature-form"/>

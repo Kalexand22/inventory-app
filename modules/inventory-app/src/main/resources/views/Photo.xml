@@ -45,7 +45,7 @@
 
   <action-method name="action-add-picture">
     <call class="com.axelor.apps.openauctionbase.controller.LotController"
-      method="addPicture"/>
+      method="addPicture"/> 
   </action-method>
 
   <action-method name="picture-attachement-change-lot-main-picture">
