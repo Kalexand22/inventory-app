@@ -22,7 +22,6 @@
         <button name="addPhoto" title="Ajouter une photo" onClick="action-add-picture" icon="fa-image" colSpan="2"/> 
         <panel-dashlet name="photosCard" colSpan="12" field="pictureList"
         action="action-album-show-photos" height="600"/>
-      </panel>
-      <panel-related field="pictureList" canNew="true"></panel-related>
+      </panel>      
   </form>
 </object-views>

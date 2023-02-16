@@ -3,18 +3,19 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
   <grid title="Photos" name="picture-attachement-grid"
-    model="com.axelor.apps.openauction.db.PictureAttachement" canNew="false" canDelete="false"
-    canEdit="false">
+    model="com.axelor.apps.openauction.db.PictureAttachement" >
     <field name="picture" widget="image"/>
     <field name="pictureType"/>
     <field name="id"/>
     <field name="picture.id"/>
+    <field name="sourceMissionLine"/>
   </grid>
   <form title="Mettre une photo en ligne" name="picture-attachement-form"
     model="com.axelor.apps.openauction.db.PictureAttachement" onSave="picture-attachement-change-lot-main-picture" 
     onLoad="picture-attachement-set-lot" > 
     <panel name="mainPanel" colSpan="12">
       <field name="main" />
+      <field name="sourceMissionLine"/>
       <panel-dashlet name="imageEditor" colSpan="12" action="action-photo-show-editor"
         height="700" showIf="id &amp;&amp; !$readonly()"/>      
     </panel>
@@ -23,7 +24,7 @@
   <action-view name="action-photo-show-editor" title="Editeur d'image">
     <view type="html"
       name="image-editor?id={{id}}&amp;model=com.axelor.apps.openauction.db.PictureAttachement&amp;metaFileField=picture&amp;projectName=inventory-apps&amp;language={{_language}}"/>
-    <view-param name="popup" value="reload"/>
+    <view-param name="popup" value="reload"/> 
     <view-param name="popup.maximized" value="true"/>
     <view-param name="forceEdit" value="true"/>
     <context name="_language" expr="eval: 'fr'"/>
@@ -62,11 +63,11 @@
     <view-param name="show-toolbar" value="false"/>
     <view-param name="popup.maximized" value="true"/>
     <domain>self.sourceMissionLine.id = :id</domain>
-    <context name="_lot" expr="eval: __this__"/>
+    <context name="_missionLine" expr="eval: __this__"/>
   </action-view>
 
   <action-record model="com.axelor.apps.openauction.db.PictureAttachement" name="picture-attachement-set-lot">
-    <field name="sourceLotNo" expr="eval: _lot"/>
+    <field name="sourceMissionLine" expr="eval: _missionLine"/>
   </action-record>
 
 

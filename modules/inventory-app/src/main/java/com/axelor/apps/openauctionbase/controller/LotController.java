@@ -14,10 +14,10 @@ public class LotController {
 
     try {
 
-      MissionLine lot = request.getContext().asType(MissionLine.class);
-
+      MissionLine missionLine = request.getContext().asType(MissionLine.class);
+      String picturePath = missionLine.getId().toString();
       LotService lotService = Beans.get(LotService.class);
-      PictureAttachement pictureAttachement = lotService.addPicture(lot);
+      PictureAttachement pictureAttachement = lotService.addPicture(missionLine);
 
       response.setView(
           ActionView.define("Ajouter une photo")
@@ -29,7 +29,7 @@ public class LotController {
               .param("forceEdit", "true")
               .param("popup.maximized", "true")
               .context("_showRecord", pictureAttachement.getId())
-              .context("_lot", lot)
+              .context("_missionLine", missionLine)
               .map());
 
     } catch (Exception e) {
