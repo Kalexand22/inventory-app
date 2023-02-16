@@ -14,8 +14,7 @@
     model="com.axelor.apps.openauction.db.PictureAttachement" onSave="picture-attachement-change-lot-main-picture" 
     onLoad="picture-attachement-set-lot" > 
     <panel name="mainPanel" colSpan="12">
-      <field name="main" />
-      <field name="sourceMissionLine"/>
+      <field name="main" />     
       <panel-dashlet name="imageEditor" colSpan="12" action="action-photo-show-editor"
         height="700" showIf="id &amp;&amp; !$readonly()"/>      
     </panel>
