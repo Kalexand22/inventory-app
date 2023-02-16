@@ -29,8 +29,6 @@
     <context name="_language" expr="eval: 'fr'"/>
   </action-view>
 
-  
-
   <cards name="picture-attachement-cards" model="com.axelor.apps.openauction.db.PictureAttachement" title="Photos" canNew="true" canDelete="true"
     css="rect-image" width="280px" orderBy="-main, id">
     
