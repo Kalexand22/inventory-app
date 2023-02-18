@@ -1,0 +1,91 @@
+.\" @(#)pvnetpass.1 03/04/15
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH pvnetpass 1 "2019"
+.SH NAME
+pvnetpass \- Zen Network Password Utility. 
+.SH SYNOPSIS
+.B pvnetpass 
+[ \fB\-g\fR ]
+.B {\-a
+|
+.B \-r
+|
+.B \-m} 
+server
+[
+.B \-u
+user
+] [
+.B \-p
+pwd ]
+.P
+.B pvnetpass \-d
+.P
+.SH DESCRIPTION
+.B pvnetpass
+is used to manage user IDs and passwords for remote servers to which your Linux or OS X client connects.
+When trying to connect to a server, the client looks up the server name in the registry and uses
+the user name and password for that server. 
+.P
+If you have both a global and a user entry for the same server, the user entry overrides the global.
+The user name should include the full user context. For example, in a Windows environment with
+domain names, specify the user as
+DOMAIN\e\e\e\euser.
+Enter two backslashes for the user name because the first one is an escape character. In NetWare, 
+specify \fBuser.context\fR.
+In Linux and OS X, use the user account name and the full machine DNS name. For example, \fBmymachine.mydomain\fR.
+.P
+The pvnetpass utility can also be used by Windows clients to change their stored credentials that were
+saved when using the security login dialog.
+.P
+You must be the root user or a member of the group zen-data to set global entries (with -g).
+.SH OPTIONS
+.TP 
+.B \-a 
+Adds a server entry for a user specified by the \-u parameter. If no user is specified, current user is assumed.  
+.TP
+.B \-g
+Manipulates default settings for all users. Settings created with \-g can be overridden by individual users.
+.TP 
+.B \-r 
+Removes a server entry for a user specified by the \-u parameter. If no user is specified, current user is assumed.
+.TP
+.B \-m 
+Modifies a server entry for a user specified by the \-u parameter. If no user is specified, current user is assumed.
+.TP
+.B \-d 
+Displays the list of configured servers.  The configured servers will display in two groups that are
+separated by a dashed line. The ones above the dashed line are global entries and are only viewable by
+administrators who are a member of group zen-data. The ones below the line are the current user's entries.
+If you have a global and a user entry for the same server, the user's entry overrides the global.
+.TP
+.B server
+Server to which you want to add a connection entry.  Server can be '*' (include the single quotes) to set the default server entry information.
+This default entry is used when there is no user entry for the server.
+.P
+.SH EXAMPLES
+.P
+From current user to all servers (overrides -g)
+.P
+pvnetpass -a '*' -p password
+.P
+From current user to one server 'myserver' (overrides -g)
+.P
+pvnetpass -a myserver -p password
+.P
+From all users (-g)  to one server 'myserver' using credentials joe:password
+.P
+pvnetpass -g -a myserver -u joe -p password
+.P
+From all users (-g)  to all servers ('*'), use default credentials joe:password
+.P
+pvnetpass -g -a '*' -u joe -p password
+.P
+.SH SEE ALSO
+.I User's Guide
+for more information about the pvnetpass utility. 
+
+

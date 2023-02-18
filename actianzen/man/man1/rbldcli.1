@@ -1,0 +1,220 @@
+.\" @(#)rbldcli.1 03/04/15
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH rbldcli 1 "2019"
+.SH NAME
+rbldcli \- Command line Rebuild utility.
+.SH SYNOPSIS
+.B rbldcli 
+[
+.B \-parameter
+]
+.I file
+.P
+.B rbldcli 
+.I @command\-file
+.P
+.SH DESCRIPTION
+.B rbldcli
+is used to rebuild MicroKernel data files on your server.
+.SH OPTIONS
+.TP 
+.B \-c 
+Instructs Rebuild to continue with the next file if an error occurs. 
+The utility notifies you of non\-MicroKernel data files or errors with MicroKernel files, 
+but continues rebuilding data files. The errors are written to the log file.
+.IP
+.B Tip: 
+This parameter is particularly useful if you specify wildcard characters (*.*) for a mixed set of files. 
+Mixed set means a combination of MicroKernel files and non\-MicroKernel files. Rebuild reports an error 
+for each non\-MicroKernel file (or any errors on MicroKernel files), but continues processing.
+.TP 
+.B \-d 
+If you specify \-d, Rebuild converts pre\-6.0 supplemental indexes (which allow duplicates) to 
+6.x, 7.x, 8.x, or 9.x indexes with linked\-duplicatable keys.
+.IP
+If you omit this parameter, Rebuild preserves the indexes as repeating-duplicatable keys.
+.IP
+If you access your data files only through Btrieve and your files have a relatively large number 
+of duplicate keys, you can use the \-d parameter to enhance the performance of the Get Next and 
+Get Previous operations.
+.TP
+.B \-m<0 | 2> 
+The \-m parameter stands for method. Rebuild selects a processing method whether you specify this 
+parameter or not. If you omit this parameter, Rebuild does the following:
+.IP
+uses \-m2 as the default method if sufficient available memory exists 
+.IP
+uses an alternative method, \-m0, if the amount of available memory is not sufficient.
+.IP
+.B \-m0 
+Clones and copies the file without dropping and replacing indexes. This method is slower than the \-m2 method. 
+It is available in case you do not want to rebuild your indexes.
+.IP
+A file built with the \-m0 creates a file where each key page is about 55% to 65% full. 
+The file is more optimized for writing and less for reading. If you can afford the extra rebuild time, 
+which can be considerable depending on the situation, you might want to rebuild a file optimized for writing.
+.IP 
+.B \-m2 
+Clones the file, drops the indexes, copies the records into the new file, and rebuilds the indexes. 
+This method is faster and creates smaller files than the \-m0 method.
+.IP
+The \-m2 method may create a new file in which the records are in a different physical order than in 
+the original file.
+.IP
+A file built with the \-m2 method has key pages that are 100% full. This allows the file to be 
+optimized for reading. 
+.TP
+.B \-p<D | P | bytes> 
+Optimizes page size for disk storage or processing, or specifies a specific page size to use for the rebuilt file. 
+.IP
+If you omit this parameter, Rebuild uses the page size from the source file. If the source page size does not 
+work for the current database engine, Rebuild changes the page size and displays an informative message 
+explaining the change. (For example, older file formats, such as 5.x, supported a page size of 1024 with 24 keys. 
+File format 8.x supports only 23 keys for a page size of 1024, so Rebuild would select a different page size 
+if building an 8.x file.) 
+.IP 
+.B \-pD 
+Optimizes page size for disk storage. For a discussion of optimal page size for disk storage, see 
+.I Choosing a Page Size 
+in 
+.I Zen Programmer\'s Guide, 
+which is part of the Zen Software Development Kit (SDK).
+.IP 
+.B \-pP 
+Optimizes for processing (that is, for your application accessing its data). For \-pP, Rebuild uses a page 
+size of 4096 bytes. 
+.IP 
+.B bytes 
+Specifies the page size (in bytes) for the new file. For file versions prior to 9.0, the valid values are 512, 1024, 1536, 2048, 2560, 3072, 3584, and 4096. For file version 9.0, the values are the same with the addition of 8192. For file version 9.5 or newer, the valid values are 1024, 2048, 4096, 8192, and 16384.
+.TP 
+.B \-b\fIdirectoryname\fR
+Specifies an alternate location for the rebuilt file (which may also be a location on a different server). 
+The default location is the directory where the data file is located. You must specify a location that 
+already exists. Rebuild does not create a directory for you. 
+.IP
+You may use either a fully qualified path or a relative path. Do not use wildcard characters in the directory name.
+.IP
+On your local server, the MicroKernel Database Engine and the Message Router must be loaded. 
+On a remote server, the MicroKernel Database Engine and communications components must be loaded. 
+.IP
+If you omit this parameter, the rebuilt file replaces the original data file. A copy of the original file 
+is not retained. 
+.IP
+If you specify this parameter, the rebuilt file is placed in the specified location and the original file is retained. An exception to this is if the specified location already contains data files with the same names. Rebuild fails if the alternate location you specify contains files with the same names as the source files. For example, suppose you want to rebuild mydata.mkd, which is in a directory named folder1. You want to place the rebuilt file into a directory named folder2. If mydata.mkd also exists in folder2 (perhaps unknown to you), Rebuild fails and informs you to check the log file.
+.IP
+.B Note: 
+Ensure that you have create file permission for the location you specify (or for the location of the source file 
+if you omit the parameter). 
+.TP 
+.B \-k\fInumber\fR
+Specifies the key number that Rebuild reads from the source file and uses to sort the rebuilt file. 
+If you omit this parameter, Rebuild reads the source file in physical order and creates the rebuilt file in 
+physical order.
+.TP 
+.B \-s<D | K> 
+Retains in the rebuilt file the existing system data and key from the source file. If you omit this 
+parameter, Rebuilt does not include the system data and key in the rebuilt file.
+.IP 
+.B \-sD 
+Rebuilds the file to include system data. The system data is not indexed. 
+.IP 
+.B \-sK 
+Rebuilds the file to include system data and key. The system data is indexed. 
+.TP  
+.B \-l\fIfile\fR 
+Specifies a file name, and optionally a path location, for the Rebuild log file. The default file name is 
+\fBrbldcli.log\fR on Windows, Linux, and OS X. On NetWare, the default file name is \fBbrebuild.log\fR. 
+The default location is the current working directory on Windows, Linux, and OS X. On NetWare, the default 
+location is SYS:\eeSYSTEM.  
+.IP 
+The following conditions apply: 
+.IP 
+* The path location must already exist. Rebuild does not create the path location. 
+.IP 
+* If you specify a path location without a file name, Rebuild ignores this parameter and 
+uses the default file name and location. 
+.IP 
+* If you specify a file name without a path location, Rebuild uses the default location. 
+.IP 
+* You must have read and write file permission for the location you specify. Rebuild uses 
+the default location if it cannot create the log file because of file permission.  
+.TP 
+.B \-pagecompresson 
+Turns on page compression for file provided the following conditions are true:
+.IP 
+* The version of the Zen database engine is PSQL 9.5 or newer.
+.IP 
+* The setting for Create File Version is 0950 (9.5) or higher. 
+.TP 
+.B \-pagecompressoff	Turns off page compression for file. This parameter has no effect if file does not contain page compression. 
+.TP 
+.B \-recordcompresson	Turns on record compression for file. 
+.TP 
+.B \-recordcompressoff	Turns off record compression for file. This parameter has no effect if file does not contain record compression.
+.B \-f<6 | 7 | 8 | 9 | 95> 
+Specifies a file format for the rebuilt file. File formats supported are versions 6.x, 7.x, 8.x, and 9.x. 
+The following example rebuilds a file to the 9.0 format:
+.IP
+rbldcli \-f9 c:\\zen\\demodata\\class.mkd
+.IP
+The following example rebuilds a file to the 9.5 format:
+.IP
+rbldcli \-f95 c:\\zen\\demodata\\class.mkd
+.IP
+If you omit this parameter, Rebuild uses the value set for the MicroKernel\'s \fBCreate File Version\fR 
+configuration option. 
+.IP
+.B Note1: 
+If you specify a file format newer than the version supported by the current database engine, 
+Rebuild uses the highest supported file format of that engine. Rebuild reports no error or 
+message for this. For example, if the database engine is Pervasive.SQL 2000i and you specify a 
+file format of 8.x (\-f8), the file is rebuilt to 7.x. File format 7.x is the highest one 
+supported by the Pervasive.SQL 2000i engine. 
+.IP
+.B Note2:
+Rebuild does not convert data types in indexes. If you rebuild a file to an older file format 
+for use with an older database engine, ensure that the engine supports the data types used. 
+You must manually adjust data types as required by your application and by the database engine.
+.IP
+.I Example 1. 
+Your data file contains index fields that use the WZSTRING data type. If you rebuild the 
+data file to a 6.x file format, the WZSTRING data type is not converted. You would be unable 
+to use the data file with a Btrieve 6.15 engine. That engine does not support the WZSTRING data type. 
+.IP
+.I Example 2. 
+Your data file contains true NULLs. You rebuild the data file to a 7.x file format. 
+The true NULLs are not converted. You would be unable to use the data file with the 
+Pervasive.SQL 7 engine. That engine does not support true NULLs.
+.TP 
+.I file 
+Specifies the file(s) to convert. If the source file is not in the current working directory, 
+include the location, either as a fully qualified path or as a relative path. You may use the 
+asterisk (*) wildcard character in the file name to specify multiple files. 
+.IP
+.B Note: 
+If the original file contains an owner name, Rebuild applies the owner name and level to the rebuilt file. 
+.TP 
+.I @command_file 
+Specifies a command file for Rebuild to execute. You may include multiple entries in one 
+command file. Each entry in the command file contains the command line parameters (if any) 
+and the set of files to convert, followed by <end> or [end]. 
+.IP
+When specifying the files to convert, use full directory names. You may use the asterisk (*) 
+wildcard character in the file names.
+.IP
+The following is an example of a Rebuild command file:
+.IP
+ \-c sys:\eemydir\ee*.* <end>
+ \-c \-p1024 dta:\eedir\ee*.* <end>
+ \-m0 \-k0 sys:\eezen\ee*.* <end> 
+ 
+ 
+.P
+.SH SEE ALSO
+.I Advanced Operations Guide
+for more information about the Rebuild utility. 
+
+

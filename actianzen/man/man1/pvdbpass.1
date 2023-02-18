@@ -1,0 +1,60 @@
+.\" @(#)pvdbpass.1 03/07/08
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.TH pvdbpass 1 "2019"
+.SH NAME
+pvdbpass \- Zen database password utility. 
+.SH SYNOPSIS
+.B pvdbpass \fIdatabase username [\-server servername] [\-port number]\fR
+.P
+.B pvdbpass \fIdatabase username password newpassword [\-server servername] [\-port number]\fR
+.P
+.SH DESCRIPTION
+.B pvdbpass
+allows users to change their passwords for secure databases without administrator intervention. 
+.SH PARAMETERS
+.TP 
+.B database 
+Database in which the user name is defined (this can be a database name or a server DSN).
+.TP
+.B username
+The user whose password will be changed. 
+.TP 
+.B password 
+The current password for the user. You must provide the original password in order to modify it. 
+You can either provide the password as a parameter or omit it and be prompted.
+.TP
+.B newpassword 
+The new password for the user. The password is subject to the limitations specified in the 
+\fISQL Engine Reference\fR.  See the \fISET PASSWORD\fR syntax.
+.P 
+.B Note:
+If the \fBnew\fR password begins with a nonalphabetic character, the password must be 
+enclosed in single quotes. If the existing password begins with a nonalphabetic character, 
+do not enclose it in single quotes (see examples).
+
+.TP 
+.B servername 
+Optional. Server name on which the database is defined. If you do not specify this option, the local machine is assumed. 
+.TP 
+.B port 
+Optional. TCP port on which the SQL engine running on servername is listening. 
+If you do not specify this option, the default port 1583 is assumed. 
+.SH EXAMPLES
+.P
+To change the Master user password and be prompted:
+.P
+.B pvdbpass demodata Master
+.P
+To change an existing password to one that does not start with an alphabetic character (use single quotes):
+.P
+.B pvdbpass demodata Joe oldpassword '123'
+.P
+To change a password on a remote server:
+.P
+.B pvdbpass demodata Joe oldpass newpass -server finance1
+.SH SEE ALSO
+.I User's Guide
+for more information about the pvdbpass utility. 
+
+

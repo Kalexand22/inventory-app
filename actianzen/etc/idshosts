@@ -1,0 +1,47 @@
+#
+#  Example idshosts file.
+#
+#  idshosts is a text file that resembles the standard Windows LMHOSTS 
+#  specifications.  
+# 
+#  For Windows, the idshosts file is searched for in the following
+#  directories:
+#          - the directory from which the application loaded
+#          - the current directory
+#          - the <windows>\SYSTEM32 directory
+#          - the <windows>\SYSTEM directory
+#          - the <windows> directory
+#          - the directories in the PATH
+#
+#  For Linux, idshosts must reside in $ACTIANZEN_ROOT/etc
+#  i.e. /usr/local/actianzen/etc
+#
+#  idshosts is formatted as follows:
+#
+#  1. All comments must be preceded by #
+#  2. The UNC or drive (for Windows clients) string being mapped has to
+#     be the first entry on a new line.
+#  3  For Windows clients, UNC mappings start with two back slashes.
+#     For Linux clients, UNC mappings start with two forward slashes.
+#  4. One or more spaces must separate the drive or UNC string being 
+#     mapped from the server name.
+#  5. If the path contains spaces it must be enclosed in double quotes.
+#  6. An optional Database name may be specified after the 
+#     server name, separated by one or more spaces.
+#
+# The PSQL client requester constructs a Btrieve URI using the
+# information from the matching idshosts entry.
+# For example, if the application passes in the following:
+#     l:\accounting\dir1\vendor.mkd
+# the requester uses the last sample entry to create the following URI:
+#     btrv://AcctServer/AcctDB?dbfile=dir1%5Cvendor.mkd
+#
+# j:                   www.example.com       # Drive mapping
+# k:\myData\           10.1.1.1                # IP notation can be used
+# \\dataServer\public  www.example.com       # Windows UNC mapping
+# //dataServer/public  yourserver              # Linux UNC mapping
+# "m:\my data\"        www.yourserver.com      # If there are spaces in 
+#                                              # path the whole path must
+#                                              # be enclosed by ""
+# l:\accounting        AcctServer     AcctDB   # Example with Database name
+

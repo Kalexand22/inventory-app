@@ -1,0 +1,69 @@
+.\" @(#)clilcadm.1 02/08/20
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH clilcadm 1 "2019"
+.SH NAME
+clilcadm \- Applies or deletes license information.
+.SH SYNOPSIS
+.B clilcadm 
+.B \-a <key | pky file>
+.B \-c [key] [force]
+.B \-d key
+.B \-e key
+.B \-g key filename
+.B \-h
+.B \-i [key]
+.B \-n [key]
+.B \-p [password]
+.B \-s [servername]
+.B \-t 
+.B \-u [username]
+.P
+.SH DESCRIPTION
+.B clilcadm
+is used to manage the user count licenses on your server.
+.SH OPTIONS
+.TP 
+.B \-a <key | pky file>
+Authorizes a specified key or an Authorization Key Data file (*.pky) file.
+.TP 
+.B \-c [key] [force]
+Clears from the machine all permanent keys and their associated user count increases. If a key is specified, only the specific key and its associated user count increases are cleared. If no key is specified, all keys and associated user count increases are cleared.  If the force option is included, a confirmation message is not displayed.
+.TP 
+.B \-d key
+Deauthorizes a specified key. 
+.TP 
+.B \-e key
+Repairs a specified key. 
+.TP 
+.B \-g key filename
+Generate offline authorization request data file for offline authorization. The product key and output file name are both required.
+.TP
+.B \-h 
+Displays help information for the \fBclilcadm\fP utility.
+.TP 
+.B \-i [key]
+Displays information about all of the applied keys, such as the type of license, user count, platform, and expiration date. This option does not display the product keys themselves (the string of letters and numbers).
+.TP
+.B \-n [key]
+Displays the number of remaining product key authorizations.
+.TP 
+.B \-p [password]
+The password associated with the user name for the server to which you are connecting. If not specified, the password is assumed to be blank. This parameter is optional and not required if a server name is not specified.
+.TP
+.B \-s [servername]
+Server name or IP address to connect to. 
+.TP
+.B \-t
+Performs a license validation on the connected server name and all associated keys.
+.TP 
+.B \-u [username]
+The user name for the server to which you are connecting. If not specified, the user name is assumed to be blank. This parameter is optional and not required if a server name is not specified.
+.P
+.SH SEE ALSO
+.I User's Guide
+for more information about the License Administrator utility. 
+
+

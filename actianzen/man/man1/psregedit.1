@@ -1,0 +1,80 @@
+.\" @(#)psregedit.1 03/04/30
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH psregedit 1 "2019"
+.SH NAME
+psregedit \- Display or edit the Zen registry. 
+.SH SYNOPSIS
+.B psregedit 
+.IP
+.B \-key \fIKEYNAME\fR [ \-r ]
+.IP
+.B \-key \fIKEYNAME\fR \-value \fIVALUENAME\fR
+.IP
+.B \-set \-key \fIKEYNAME\fR [\-type \fITYPE\fR] \fIVALUE\fR
+.IP
+.B \-set \-key \fiKEYNAME\fR \-value \fIVALUENAME\fR [\-type \fITYPE\fR] \fIVALUE\fR
+.IP
+.B \-delete \-key \fiKEYNAME\fR
+.IP
+.B \-delete \-key \fiKEYNAME\fR \-value \fIVALUENAME\fR
+.IP
+.B \-export \-key \fiKEYNAME\fR [\-file \fIFILENAME\fR]
+.IP
+.B \-import [\-file \fIFILENAME\fR]
+.P
+.SH DESCRIPTION
+.B psregedit
+is used to manage the Zen Registry. You must be root user or a member of the group zen-data to make changes to the Zen Registry.
+.P
+For all options, the variables are defined as follows:
+.TP
+.B KEYNAME
+PS_HKEY\eSubkey
+.TP
+.B PS_HKEY
+{PS_HKEY_CONFIG | PS_HKEY_CONFIG_64 | PS_HKEY_CLASSES | PS_HKEY_CLASSES_64 | PS_HKEY_USER}
+.TP
+Subkey is a subordinate key under a major key.
+.TP
+.B VALUENAME
+the name assigned to the Registry value or \'default\'
+.TP
+.B VALUE
+the value assigned to VALUENAME
+.TP
+.B TYPE
+{PS_REG_STR | PS_REG_UINT32 | PS_REG_UINT64}
+.B FILENAME
+the name of a file, which may also include a path
+.SH OPTIONS
+.TP 
+.B \-key 
+Get the key value. If \-value is not specified, then the entire key contents 
+are displayed. To view all subkeys, specify \-r (for recursive).
+.TP 
+.B \-set \-key 
+Set the key value. If \-value is not specified, the default value will be set.
+\fIVALUE\fR must be appropriate to the \fITYPE\fR specified. \fBPS_REG_STR\fR
+is assumed if \-type is not specified. You must be root user or a member of 
+the group \fBzen-data\fR to set keys.
+.TP
+.B \-delete \-key 
+Delete the specified key or value. If \-value is not specified, then the entire key
+and all subkeys will be deleted. You must be root user or a member of the
+group \fBzen-data\fR to delete keys.
+.TP
+.B \-export \-key 
+Export the given key, including all values and subkeys to standard output or the 
+named file.
+.TP
+.B \-import [\-file \fIFILENAME\fR] 
+Import keys and values from either the standard input or the named file. 
+.P
+.SH SEE ALSO
+.I User's Guide
+for more information about the \fBpsregedit\fR utility. 
+
+

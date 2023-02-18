@@ -1,0 +1,45 @@
+.\" @(#)psregsvr.1 03/04/16
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH psregsvr 1 "2019"
+.SH NAME
+psregsvr \- register components with the Zen registry.
+.SH SYNOPSIS
+.B psregsvr 
+[
+.B \-s
+] [
+.B \-u
+]
+{ [
+.B \-f
+.I file 
+] | 
+.I filename
+}
+
+.P
+.SH DESCRIPTION
+.B psregsvr
+is used to register components in the Zen registry. 
+.SH OPTIONS
+.TP 
+.B \-s 
+Silent. Do not print any status or error messages.  
+.TP 
+.B \-u 
+Unregister. If not specified, register is assumed. 
+.TP
+.B \-f\fIfile\fR
+Specifies a text file with PCOM modules listed one per line. 
+.TP
+.I filename 
+Specifies a single PCOM module to register.  
+.P
+.SH SEE ALSO
+.I User's Guide
+for more information about the \fBpsregsvr\fR utility. 
+
+

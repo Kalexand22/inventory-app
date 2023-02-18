@@ -1,0 +1,84 @@
+.\" @(#)deu.1 11/21/19
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" All Rights Reserved
+.TH deu 1 "2019"
+
+.SH NAME
+deu \- Zen Data Export Utility
+
+.SH SYNOPSIS
+\fBdeu\fR \fIDatabaseName SelectFile ResultsFile\fR
+.P
+[\fB\-c\fR] [\fB\-h\fR] [\fB\-o\fR] [\fB\-e\fR \fIFileEncoding\fR]
+.P
+[\fB\-f\fR \fIFieldDelim\fR] [\fB\-l\fR \fILogFile\fR] [\fB\-n\fR \fIPortNumber\fR] 
+.P
+[\fB\-s\fR \fIServerName\fR] [\fB\-u\fR \fILoginId\fR \fB\-p\fR \fIPassword\fR]
+
+.SH DESCRIPTION
+.B deu
+is used to export data by running a SQL statement from a command file.
+
+.SH OPTIONS
+.TP 
+\fIDatabaseName\fR
+This may be a database name or a server DSN.
+
+.TP 
+\fISelectFile\fR
+File containing the SQL SELECT command to execute.
+
+.TP 
+\fIResultsFile\fR
+Contains the resulting dataset from executing \fISelectFile.
+
+.TP 
+\fB-c\fR
+Write column names in first row.
+
+.TP 
+\fB-h\fR
+This help screen.
+
+.TP 
+\fB-o\fR
+Overwrite \fIResultsFile\fR if it exists.
+
+.TP 
+\fB-e\fR \fIFileEncoding\fR
+e.g. Windows-1252, Big5, EUC_JP, Shift_JIS, SJIS, UTF-8, UTF-8-BOM, UTF-16BE, UTF-16BE-BOM, UTF-16LE, UTF-16LE-BOM (default windows-1252).
+
+.TP 
+\fB-f\fR \fIFieldDelim\fR
+Field delimiter character (default ,)
+
+.TP 
+\fB-l\fR \fILogFile\fR
+Log output to file (default stdout).
+ 
+.TP 
+\fB-n\fR \fIPortNumber\fR
+TCP port where SQL engine is listening (default 1583).
+ 
+.TP 
+\fB-s\fR \fIServerName\fR
+Server where database is defined (default local machine).
+ 
+.TP 
+\fB-u\fR \fILoginId\fR
+Login ID of the database user.
+ 
+.TP 
+\fB-p\fR \fIPassword\fR
+Password of the database user.
+ 
+.P
+.SH EXAMPLE
+\fBdeu\fR DEMODATA select.sql datafile.dat -c -l log.txt
+
+.P
+.SH SEE ALSO
+.I SQL Engine Reference
+for more information about supported SQL syntax.  
+

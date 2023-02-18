@@ -1,0 +1,57 @@
+.\" @(#)pvddl.1 05/01/13
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH pvddl 1 "2019"
+
+.SH NAME
+pvddl \- run SQL statements from a command file.
+
+.SH SYNOPSIS
+\fBpvddl\fR \fIdatabase commandfile\fR
+.P
+[\fB\-username\fR \fIusername\fR] [\fB\-password\fR \fIpassword\fR]
+.P
+[\fB\-server\fR \fIservername\fR] [\fB\-port\fR \fInumber\fR] [\fB\-stopOnFail\fR]
+
+.SH DESCRIPTION
+.B pvddl
+is used to execute a series of SQL statements in a command file. 
+
+.SH OPTIONS
+.TP 
+\fIdatabase\fR
+Database against which the SQL statements in the command file are to be executed (this can be a database name or a server DSN).
+
+.TP 
+\fIcommandfile\fR
+Text file that contains the SQL statements. Certain categories of SQL statements, such as data definition language, are better suited for use in the command file. (Contrast this with a data manipulation statement such as SELECT. A SELECT statement can be used, but the result set is not returned to standard output.)
+You need a separator character between each command in your command file. The default separator is the # character.
+
+.TP 
+\fB-username\fR \fIusername\fR
+Name of a user defined for a database with security enabled.
+
+.TP 
+\fB-password\fR \fIpassword\fR
+Password for the user identified by \fIusername\fR.
+
+.TP 
+\fB-server\fR \fIserver\fR
+Name of the server on which the database is defined. If you do not specify this option, the local machine is assumed. You may also specify the IP address of the server.
+
+.TP 
+\fB-port\fR \fInumber\fR
+TCP port number listened to by the database engine running on the server. If you do not specify this option, the default port 1583 is assumed. (Port 1583 is the default port used for the relational interface.)
+
+.TP 
+\fB-stopOnFail\fR
+Stop when the first SQL error is encountered in the command file.  Pvddl returns an error code of PS_E_FAIL if an error is encountered.  The default action is for pvddl to continue after an SQL error is encountered.
+ 
+.P
+.SH SEE ALSO
+.I SQL Engine Reference
+for more information about supported SQL syntax.  
+
+

@@ -1,0 +1,198 @@
+.\" @(#)isql.1 05/06/14
+.\" This utility is from code created by Peter Harvey @ CodeByDesign.
+.\" Released under GPL 18.FEB.99
+.\" All Rights Reserved
+.\" Please visit;                             
+.\"      http://www.unixodbc.org               
+.\"      pharvey@codebydesign.com              
+.\"      nick@easysoft.com 
+.TH isql 1 "2019"
+.SH NAME
+isql \- Interactive SQL test utility.
+.SH SYNOPSIS
+.P
+.B
+<isql | isql64> \fiDSN\fr [\fiUID\fr [\fiPWD\fr]] [\fioptions\fr]
+.P
+Where:
+.P
+\fiDSN\fr is the data source name for the database to which you want to connect. Always required.
+.br
+\fiUID\fr is the user name to connect to the Zen database engine for a secured database. Required only for a secured database.
+.br
+\fiPWD\fr is the password for UID. Required only if UID used.
+.br
+\fioptions\fr is one or more of the options as defined below.
+.SH DESCRIPTION
+.P
+isql is an interactive ODBC test utility that you can use to test your DSNs for their connectivity to databases and to execute SQL statements once you are connected to a database. The 32-bit utility is named isql and is installed with the 32-bit Zen Client Access package. The 64-bit utility is named isql64 and is installed with 64-bit Zen Enterprise Server, Cloud Server, and Client. 
+.P
+The only difference between the two utilities is the type of DSN to which they can connect. By default, dsnadd creates DSNs that are accessible to both 32-bit and 64-bit applications (the DSNs specify the driver description "Pervasive ODBC Interface"). You can test connectivity of such DSNs with isql or isql64.  
+.P
+Deprecated, legacy-style DSNs are accessible only to 32-bit applications. Therefore, you can test connectivity of such DSNs only with isql. 
+.P
+For example,  to connect  to  the  DEMODATA sample database included with Zen Server, run isql (or isql64) with the DSN as the first parameter: \fbisql DEMODATA\fr or \fbisql64 DEMODATA\fr. (The DSN for DEMODATA specifies the driver description "Pervasive ODBC Interface" so either utility can test its DSN connectivity.) The utility puts you in  an  interactive state with the database. From that state, you can query the database (such as \fbSELECT * FROM Department\fr).
+.P
+To enable security on a database using isql, first connect to the database as the Master user, then use the SET SECURITY statement in SQL to set the Master user password. For example:
+.IP
+\fbisql DEMODATA Master
+.br
+SET SECURITY = password\fr
+.P
+To connect to a secured database, pass the user name and password as the second and third parameters respectively to the isql utility. For example, to connect to DEMODATA as user Master using password vforge, enter \fbisql64 DEMODATA Master vforge\fr or \fbisql DEMODATA Master vforge\fr.
+.SH OPTIONS
+.TP 
+.B -b	
+Suppress prompts for batch processing. 
+.TP 
+.B -c	
+Display column names on first row (use with -d)
+.TP 
+.B -dx	
+Delimit columns with character x.
+.TP 
+.B -llocnname	
+Set locale to locname.
+.TP 
+.B -mn	
+Limit column display width to n characters.
+.TP 
+.B -v	
+Display verbose explanations for errors and warnings.
+.TP 
+.B --version	
+Display version of unixODBC in use.
+.TP 
+.B -w	
+Wrap results in an HTML table. 
+.TP 
+.B -x0xHH	
+Delimit columns with HH, where x is in hex. For example, 0x09 is the tab character.
+.SH COMMANDS
+Once you are in interactive mode, the following commands may be used.
+.TP 
+.B 
+sql-statement	
+A valid SQL statement to execute against the database to which isql or isql64 is connected.
+.TP 
+.B 
+help [tablename] 	
+Display column information. The output is the same as for the dbo.fSQLColumns catalog function. See dbo.fSQLColumns in 
+\fiSQL Engine Reference\fr. If the table name is omitted, the output is for all tables in the database, including system tables.
+.TP 
+.B 
+quit	
+Exits interactive mode.
+.SH EXAMPLES
+.P
+The following example connects to an unsecured database named acctspay that will be accessed by a 64-bit ODBC application running on a 64-bit client:
+.IP
+.B
+isql64 acctspay
+.P
+The DSN is also named acctspay and specifies the ODBC driver description "Pervasive ODBC Interface."
+.P
+The following example connects to a secured database named payroll as user Master with a password of j77b99:
+.IP
+.B
+isql payrollsecdb Master j77b99
+.P
+The DSN is named payrollsecdb and specifies the deprecated, legacy-style ODBC driver description "Pervasive ODBC Engine Interface." (You could also use isql to test the DSN if the DSN had specified the ODBC driver description "Pervasive ODBC Interface.") 
+.P
+The following example shows how to process multiple SQL statements. Suppose that you want to run the following two queries against the DEMODATA sample database:
+.IP
+.B
+select count(*) from billing
+.br
+.B
+select count(*) from person
+.P
+Create a file (named two-queries.sql for discussion purposes) with the two lines. Include a blank line as the last line in the file.
+Run the following command:
+.IP
+.B
+cat two-queries.sql | isql demodata -b
+.P
+The result is as follows:
+.IP
++------------+
+.br
+| EXPR_1     |
+.br
++------------+
+.br
+| 1315       |
+.br
++------------+
+.br
+SQLRowCount returns 1
+.br
+1 rows fetched
+.br
++------------+
+.br
+| EXPR_1     |
+.br
++------------+
+.br
+| 1500       |
+.br
++------------+
+.br
+SQLRowCount returns 1
+.br
+1 rows fetched
+.P
+Note the use of the -b option to suppress the prompting information from the output. Without the -b option, the result is as follows:
+.IP
++---------------------------------------+
+.br
+| Connected!                            |
+.br
+|                                       |
+.br
+| sql-statement                         |
+.br
+| help [tablename]                      |
+.br
+| quit                                  |
+.br
+|                                       |
+.br
++---------------------------------------+
+.br
+SQL> +------------+
+.br
+| EXPR_1     |
+.br
+.br
++------------+
+.br
+| 1315       |
+.br
++------------+
+.br
+SQLRowCount returns 1
+.br
+1 rows fetched
+.br
+SQL> +------------+
+.br
+| EXPR_1     |
+.br
++------------+
+.br
+| 1500       |
+.br
++------------+
+.br
+SQLRowCount returns 1
+.br
+1 rows fetched
+.SH SEE ALSO
+\fiZen User's Guide\fr for more information about the isql utility.
+.br
+\fiZen ODBC Guide\fr for more information about DSNs. 
+.br
+dsnadd(1)
+

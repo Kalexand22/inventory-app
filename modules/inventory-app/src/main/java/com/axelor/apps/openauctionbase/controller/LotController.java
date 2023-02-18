@@ -17,7 +17,7 @@ public class LotController {
 
       TestJDBC.test();
       MissionLine missionLine = request.getContext().asType(MissionLine.class);
-      
+
       LotService lotService = Beans.get(LotService.class);
       PictureAttachement pictureAttachement = lotService.addPicture(missionLine);
 

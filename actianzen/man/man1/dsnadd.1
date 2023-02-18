@@ -1,0 +1,144 @@
+.\" @(#)dsnadd  03/10/04
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH dsnadd 1 "2019"
+.SH NAME
+dsnadd - Data Source Name creation utility
+.SH SYNOPSIS
+.P
+.B dsnadd -dsn=\fiDSNname\fr -db=\fiDBname\fr
+.P
+Where:
+.P
+\fiDSNname\fr is a name you want to assign to the new data source.
+.br
+\fiDBname\fr is the name of the named database on the Zen host.
+.SH DESCRIPTION
+dsnadd simplifies the setup of a new ODBC data source to connect to a Zen database. It modifies the odbc.ini file by providing the appropriate properties for the new data source. 
+.P
+Zen follows the UNIXODBC standard by using the odbcinst.ini file in /usr/local/actianzen/etc to specify a 32-bit and a 64-bit ODBC driver. DSNs that reference the "Pervasive ODBC Interface" driver description point to the odbcinst.ini information from the odbc.ini file. A single DSN can be used by both a 32-bit application and a 64-bit application. 
+.P
+Optionally, dsnadd provides options that let you create legacy-style DSNs that specify a 32-bit driver name in odbc.ini rather than pointing to odbcinst.ini. However, such DSNs are not accessible to 64-bit applications.
+.P
+To create a DSN on the server that connects to a named database:
+.IP
+.B
+dsnadd -dsn=myDSN -db=DBname 
+.P
+This creates a DSN with the description "Pervasive ODBC Interface" that can be used by both a 32-bit application and a 64- bit application on the server. The DSN is not visible as an Engine DSN in ODBC Administrator running on a Windows client.
+.P
+To add a deprecated, legacy-style Client DSN with the description "Pervasive ODBC Client Interface," execute the following command:
+.IP
+.B
+dsnadd -dsn=myDSN -sdsn=\fiengineDSN\fr -host=\fizenhost\fr -clntdsn
+.P
+Where:
+.P
+\fiengineDSN\fr is the name of the Engine DSN on the Zen host.
+.br
+\fizenhost\fr is the name of the host where your Zen Server is installed.
+.P
+Note that the DSN is accessible only to 32-bit applications.
+.P
+To add a deprecated, legacy-style Engine DSN on the server with the description "Pervasive ODBC Engine Interface:"
+.IP
+.B
+dsnadd -dsn=myDSN -db=DBname -engdsn
+.P
+Note that the DSN is accessible only to 32-bit applications.
+.P
+To list existing DSNs:
+.IP
+.B
+dsnadd -l
+.P
+.SH OPTIONS
+.P
+.B
+The following options are the most commonly used:	
+.TP
+.B -db=	
+Name of the database (local or remote) to which the DSN is associated
+.TP
+.B  -dsn-name= | -dsn=	
+The Data Source Name
+.TP
+.B  -help	
+Display syntax and options help for the dsnadd utility
+.TP
+.B  -l	
+List existing DSNs
+.TP
+.B  openmode=<0|1|-1|-4> | -omode=<-0|1|-1|-4>	
+Specify the default file open mode for files opened with the current connection. The default is 0, or Normal. Can be used only with local connections, not remote client connections. For more information on file open modes, see DSN Open Mode in SQL Engine Reference.
+.TP
+.B  -srv-host= | -host=	
+Server host name
+.TP
+.B  -srv-port= | -port=	
+Server port number. The default is 1583. (See also Changing the Default Communication Ports in Getting Started With Zen.)
+.TP
+.B  -translate=< none | auto >	
+Encoding translation to use for character data. The default is none, meaning that no character data is translated between the client and server on the assumption that the client and server use the same operating system encoding.
+.P
+.B
+The following options are used to create deprecated, legacy-style DSNs:	
+.TP
+.B  -clntdsn	
+Create a deprecated, legacy-style Client DSN with the driver description "Pervasive ODBC Client Interface."
+Rather than using Client DSNs, new applications or revised 32-bit applications should create a DSN that connects to a named database using -db=.
+.TP
+.B  -engdsn	
+Create a deprecated, legacy-style Engine DSN with the driver description "Pervasive ODBC Engine Interface." 
+Rather than using Engine DSNs, new applications or revised 32-bit applications should create a DSN that connects to a named database using -db=.
+.TP
+.B  -sdsn=	
+For use with deprecated, legacy-style Client DSNs. Name of an Engine DSN on the Zen Server.
+.P
+.B
+The following options are typically used only for application development and testing:	
+.TP
+.B  -dsn-desc= | -desc=	
+dsnadd provides a default DNS description in odbc.ini. If you want to override the default description, use this option to specify a descriptive string of your choosing. If the descriptive string contains the space character, you must quote the entire string with double quotes.
+.TP
+.B  -drv-desc=	
+dsnadd handles the driver descriptions based on the absence or presence of the -db, -clntdsn and -engdsn options. If specified, must be one of the following:
+.IP
+Pervasive ODBC Interface
+.br
+Pervasive ODBC Client Interface
+.br
+Pervasive ODBC Engine Interface
+.TP
+.B  -drv-path= | -drv=
+The path where the driver libraries are located. The default is /usr/local/actianzen/lib:$HOME/lib.
+.TP
+.B  -odbc-ini= | -ini=	
+ODBC.ini file name (for example, /usr/local/actianzen/etc/odbc.ini)
+.P
+.SH EXAMPLES
+.P
+The following example creates a server-side DSN named acctingdb that connects to a local database named region1accting. 
+.IP
+.B
+dsnadd -dsn=acctingdb -db=region1accting 
+.P
+The following example creates a client-side DSN named USInvoices that connects to a database named DomesticOrders on a remote server named USInventory:
+.IP
+.B
+dsnadd -dsn=USInvoices -db=DomesticOrders -host=USInventory
+.P
+The following example creates a deprecated, legacy-style Client DSN named bkordersclnt that references an Engine DSN named backorderssrv on a machine named JapanSvr2 and uses automatic encoding.
+.IP
+.B
+dsnadd -dsn=bkordersclnt -sdsn=backorderssrv -host=JapanSvr2 -translate=auto -clntdsn
+.P
+The following example creates a deprecated, legacy-style Engine DSN named partsctlg that connects to a database named partscatalog.
+.IP
+.B
+dsnadd -dsn=partsctlg -db=partscatalog -engdsn
+.SH SEE ALSO
+dbmaint(1), isql(1)
+

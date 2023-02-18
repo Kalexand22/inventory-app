@@ -1,0 +1,72 @@
+.\" @(#)bmon.1 05/06/14
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH bmon 1 "2019"
+.SH NAME
+bmon \- Interactive monitor utility.
+.SH SYNOPSIS
+\fBbmon\fR -f [\fIfilepath\fR]\fIconfig_file\fR [-runonce]
+.SH DESCRIPTION
+\fBbmon\fR 
+allows you to monitor Zen activities on a server. It provides 
+information that is useful for both database administration and 
+application programming diagnostics. The utility can monitor the following:
+.P
+* Files
+.P
+* Users
+.P
+* Resource statistics
+.P
+* Communication statistics
+
+.P
+.SH OPTIONS
+.TP 13
+\fB-f\fR 
+This is a required parameter to specify that a configuration file is 
+providing input to the utility.
+.TP 13
+\fIfilepath\fR 
+The path to the configuration file. If omitted, bmon 
+checks the local directory for the configuration file.
+.TP 13
+\fIconfig_file\fR 
+The name of the configuration file. The file name is of your choosing.
+.TP 13
+\fB-runonce\fR 
+This is an optional parameter that instructs the utility to 
+run once, then exit. The runonce parameter is particularly 
+useful when bmon is used in a batch file.
+.IP
+If runonce is omitted, the utility executes 
+the settings in the configuration file, then pauses for the duration 
+of the refresh rate. During the pause, you can 
+send the utility a valid keyboard key response as shown below. If 
+the refresh rate is set to zero, the utility pauses indefinitely 
+until it receives a valid keyboard key response. The \fBrefreshrate\fR setting 
+in the configuration file specifies how many seconds to pause.
+.IP
+\fBKeyboard Key Response:\fR 
+.IP
+\fB“Q” (or “q”) + Enter\fR stops execution of the utility
+.IP
+\fB“R” (or “r”) + Enter\fR refreshes the monitoring (runs the utility again)
+.IP
+\fBRefresh Rate:\fR 
+.IP
+\fB0\fR (pause indefinitely)
+.IP
+\fBKeyboard Key Response:\fR 
+.IP
+\fB“Q” (or “q”) + Enter\fR stops execution of the utility
+.IP
+\fBRefresh Rate:\fR 
+.IP
+\fB> 0\fR (pause for value of seconds)
+
+.SH SEE ALSO
+\fIAdvanced Operations Guide\fR
+for more information about the bmon utility. 

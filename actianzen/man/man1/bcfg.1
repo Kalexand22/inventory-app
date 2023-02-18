@@ -1,0 +1,200 @@
+.\" @(#)bcfg.1 05/06/14
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH bcfg 1 "2019"
+.SH NAME
+bcfg \- Interactive configuration utility.
+.SH SYNOPSIS
+\fBbcfg\fR -I \fIinputfile\fR [-S \fIserver\fR] [-U \fIusername\fR] [-P \fIpassword\fR] [-E]
+.P
+\fBor\fR
+.P
+\fBbcfg\fR -O \fIoutputfile\fR [-S \fIserver\fR] [-U \fIusername\fR] [-P \fIpassword\fR] [-E]
+.P
+\fBor\fR
+.P
+\fBbcfg\fR \fIID\fR \fIvalue\fR [-S \fIserver\fR] [-U \fIusername\fR] [-P \fIpassword\fR]
+.P
+\fBor\fR
+.P
+\fBbcfg\fR -H <\fIkeyword\fR | "\fIkeyword with spaces\fR"> [-S \fIserver\fR] [-U \fIusername\fR] [-P \fIpassword\fR]
+
+.P
+.SH DESCRIPTION
+\fBbcfg\fR 
+is used from the command line to configure settings for a Zen Server or Client. You can configure one setting at a time or provide one or more settings in an input file.
+
+.P
+.SH OPTIONS
+.TP 13
+\fB-I\fR 
+Required parameter if you provide an input file to the utility.  
+.TP 13
+\fIinputfile\fR 
+A text file that contains one or more configuration setting records for a 
+specified server and the value assigned to each setting.
+A convenient way to create an input file is first to create an 
+output file. You can then edit the setting values as required 
+and use the edited version as an input file. 
+.TP 13
+\fB-O\fR 
+Required parameter if you want the output results of running the utility sent to a text file.
+.TP 13
+\fIoutputfile\fR 
+A text file that contains the current configuration settings for a specified 
+server as a result of running the utility.
+.TP 13
+\fIID\fR 
+A two or three digit integer that uniquely identifies the configuration setting. 
+Some configuration settings require that you restart the database engines for 
+the setting to take effect. Bcfg prompts you if a restart is required. 
+.TP 13
+\fIvalue\fR 
+A value assigned to the configuration setting. The valid values are specified in 
+a setting record in Options or Range. 
+If Value is omitted, the utility returns the current setting. 
+If Value is included, the utility changes the setting based on the value assignment.
+.TP
+\fB-H\fR 
+The help search option for a keyword (that is, help for a keyword). The utility searches for configuration settings that contain the keyword and returns the ID and setting name, or returns no matches found.
+.TP 13
+\fIkeyword\fR 
+The name of the configuration setting, such as ALLOW CLIENT-STORED CREDENTIALS or 
+SUPPORTED PROTOCOLS. 
+Note that keyword is case insensitive. However, if the keyword contains one or 
+more spaces, you must double quote the string. 
+The utility can provide help based on partial keywords. For example, if you 
+specify -H client, the utility returns all setting with the word "client" as 
+part of the setting name. If you specify -H a, the utility returns all settings 
+with an "a" in the name.
+.TP 13
+\fB-S\fR 
+Required parameter if the configuration settings apply to a remote server 
+(a server other than the local one).
+.TP 13
+\fIserver\fR 
+The name or IP address of the remote server that contains the database engine. 
+.TP 13
+\fB-U\fR 
+Required parameter if a user name is required to access \fIserver\fR. 
+.TP 13
+\fIusername\fR 
+User name with which you will connect to \fIserver\fR. 
+.TP 13
+\fB-P\fR 
+Required parameter if a password is required to access \fIserver\fR. 
+.TP 13
+\fIpassword\fR 
+Password used with \fIusername\fR to connect to \fIserver\fR.  
+.TP 13
+\fB-E\fR 
+Ignore errors when reading \fIinputfile\fR or writing to \fIoutputfile\fR.  
+
+.P
+.SH EXAMPLES
+.P
+.SS Configuring a Single Setting from the Command Line
+.P
+Suppose that you want to turn on a configuration setting having to do 
+with reconnecting a client to the server in the event of a network outage. 
+You are not certain about the name of the configuration setting. 
+Complete the following steps.
+.P
+At a command prompt, type bcfg -H reconnect then press Enter. 
+The utility reports all settings that contain the string "reconnect":
+.P
+ID               Setting Name
+.P
+-----------------------------
+.P
+29               Enable Auto Reconnect
+.P
+148              Enable Auto Reconnect
+.P
+149              Auto Reconnect Timeout
+.P
+Two of the settings, 29 and 148, look like what you want, but which is which?
+.P
+Type bcfg 29 then press Enter. 
+The utility reports the following for setting ID 29:
+.P
+=====================
+.P
+ENABLE AUTO RECONNECT
+.P
+=====================
+.P
+ID: 29
+.P
+Value: Off
+.P
+Options: On     Off
+.P
+Default Value: Off
+.P
+Description: <Client setting> Specifies if the Client will attempt to reconnect to the Server in the event of a network outage. The reconnected Client will continue processing as if no errors were encountered.
+The description tells your that this setting applies to a client and that the setting is currently "off."
+.P
+Type bcfg 29 and then press Enter.
+.P
+The utility informs you that system setting 29 has been updated.
+.P
+If you want to verify that the setting is now "on," type bcfg 29 then press Enter.
+.P
+The utility reports the following for setting ID 29:
+.P
+=====================
+.P
+ENABLE AUTO RECONNECT
+.P
+=====================
+.P
+ID: 29
+.P
+Value: On
+.P
+Options: On    Off
+.P
+Default Value: Off
+.P
+Description: <Client setting> Specifies if the Client will attempt to reconnect to the Server in the event of a network outage. The reconnected Client will continue processing as if no errors were encountered.
+.P
+Note that the value is now set to "on."
+.P
+.SS Editing an Input File
+.P
+An input file must contain at least one complete record for one setting. If you 
+create an input file from an output file and want to remove configuration 
+settings, ensure that the remaining settings are complete records. 
+At a minimum, a complete record encompasses and ID and Value pair. 
+However, to ensure clarity, it is recommended that you include the 
+top line of the setting header through the description of the setting. For 
+example, here is a suggested minimal record for Enable Auto Reconnect:
+.P
+=====================
+.P
+ENABLE AUTO RECONNECT
+.P
+=====================
+.P
+ID: 29
+.P
+Value: On
+.P
+Options: On    Off
+.P
+Default Value: Off
+.P
+Description: <Client setting> Specifies if the Client will attempt to reconnect 
+to the Server in the event of a network outage. The reconnected Client 
+will continue processing as if no errors were encountered. 
+Other than limiting which setting records are included in 
+the input file, the only other change allowed is to the Value 
+assignments. The assignment can be whatever is specified by Options or by Range.
+.SH SEE ALSO
+\fIAdvanced Operations Guide\fR
+for more information about the bcfg utility. 
+
+

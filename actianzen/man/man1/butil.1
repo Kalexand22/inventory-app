@@ -1,0 +1,544 @@
+.\" @(#)butil.1 02/08/20
+.\" Copyright 2019 Actian Corporation
+.\" All Rights Reserved Worldwide
+.\" Portions Copyright (c) 1995, Sun Microsystems, Inc.
+.\" All Rights Reserved
+.TH butil 1 "2019"
+.SH NAME
+butil \- Btrieve Maintenance Utility
+.P
+.SH SYNOPSIS
+\fBbutil\fR \-clone outputFile sourceFile [-O<owner | /PROMPT>] [-pagecompresson | -pagecompressoff] [-recordcompresson | -recordcompressoff] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-clrowner sourceFile -O<owner | /PROMPT> [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR @commandFile [commandOutputFile]
+.P
+\fBbutil\fR \-copy sourceFile outputFile [-O< owner1 | /PROMPT> [-O<owner2 | /PROMPT>]] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-create outputFile descriptionFile [< Y | N >] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-drop sourceFile <keyNumber | SYSKEY> [-O<owner | /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-endbu <-A | sourceFile | @listFile > [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-index sourceFile indexFile descriptionFile [ -O<owner | /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-load unformattedFile outputFile [-O<owner |/PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-recover sourceFile unformattedFile [-O<owner |/PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-rollfwd <sourceFile | volume | drive | @listFile> [<-L[dumpFile] | -W[dumpFile]> [-T<dataLength>] 
+[-E<keyLength>] [-H] [-V] [-O<ownerList | owner> | /PROMPT]][-A] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-save sourceFile unformattedFile [Y indexFile | N <keyNumber | -1>] [-O<owner1 | /PROMPT> [-O<owner2 | /PROMPT>]] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-setowner sourceFile -O<owner | /PROMPT>  level  [-L] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-sindex sourceFile <descriptionFile | SYSKEY> [keyNumber] [-Oowner| /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-startbu <sourceFile | @listFile> [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-stat sourceFile [-Oowner| /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]
+.P
+\fBbutil\fR \-ver
+.P
+.SH DESCRIPTION
+The \fBBtrieve Maintenance Utility\fR, or \fIbutil\fR, is a command line 
+utility that performs command file and data manipulations on a MicroKernel Database Engine (MKDE).
+.P
+The Maintenance utility performs the following file and data manipulations:
+.P
+1. Imports and exports ASCII, unformatted, and SDF sequential data.
+.P
+2. Copies data between data files.
+.P
+3. Returns MKDE version information.
+.P
+4. Recovers changes made to a file between the time of the last backup
+and a system failure.
+.P
+5. Starts and stops 
+.B continuous operations 
+for use in performing server backups.
+.P
+\fBContinuous operation\fR
+is a MKDE feature that enables user to back up files while they are in use by 
+Btrieve-based applications.  Two Maintenance Utility commands, startbu and 
+endbu, begin and end continuous operation on a file or set of files.
+.P
+.SH OPTIONS
+Maintenance Utility command options are not case sensitive unless the option 
+is a filename.
+.P
+If you run \fIbutil\fR without specifying a command option or with an invalid 
+command option, a usage message is printed.  The usage message indicates that 
+there is an optional \fI\-S\fR command line argument to \fIbutil\fR.  This 
+argument, which is used to suppress screen-at-a-time printing on NetWare, is ignored under Unix.
+.P
+Some of the options below use the arguments \fIsourceFile\fR, 
+\fIdescriptionFile\fR, and \fIowner\fR.
+.P
+A \fIsource file\fR generally refers to a Zen database file.
+.P
+A \fIdescription file\fR is an ASCII text file containing information the
+Maintenance Utility needs to perform create and index operations.  
+Description files are made up of one or more elements, where each element 
+consists of a keyword followed by an equal sign (=) and a value (with no 
+space separator).  Please refer to your Zen User's Guide for 
+details of description files.
+.P
+The MKDE enables you to restrict access to a file by specifying an \fBowner 
+name\fR.  Since owner names are optional, the files you use with this utility 
+may or may not require an owner name.  Owner names are case sensitive.
+.P
+.TP
+.B "\-clone outputFile sourceFile [-O<owner | /PROMPT>] [-pagecompresson | -pagecompressoff] [-recordcompresson | -recordcompressoff] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The clone command creates a new, empty, formatted data file with the same 
+file specifications as an existing file (including any supplemental indexes, 
+but excluding the owner name).  The new data file includes all of the defined 
+key characteristics (such as key position, key length, or duplicate key 
+values) contained in the existing file.
+.IP
+.B outputFile 
+is the path name you want to use for the new, empty data file.
+.IP
+.B sourceFile
+is the path name of the existing data file you want to replicate.
+.IP
+.B owner
+is the owner name, if any, for the source data file.  The new data file will 
+not have an owner name.
+.TP 
+.B \-pagecompresson 
+Turns on page compression for outputfile provided the following conditions are true:
+.IP 
+* The version of the Zen database engine is PSQL 9.5 or newer.
+.IP 
+* The setting for Create File Version is 0950 (9.5) or higher. 
+.TP 
+.B \-pagecompressoff	Turns off page compression for outputfile. This parameter has no effect if sourcefile does not contain page compression. 
+.TP 
+.B \-recordcompresson	Turns on record compression for outputfile. 
+.TP 
+.B \-recordcompressoff	Turns off record compression for outputfile. This parameter has no effect if sourcefile does not contain record compression.
+.TP
+.B "\-clrowner sourceFile -O<owner | /PROMPT> [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The clrowner command clears the owner name of a data file.
+.TP
+.B "@commandFile [commandOutputFile]"
+.IP
+The Maintenance Utility allows you to specify the butil command options in a 
+commandFile that can be specified to butil.  An <end> keyword must be placed 
+after each command option in the file.
+.IP
+The following is an example command file:
+.br
+  -create xface.btr xface.dsc
+.br
+  <end>
+.br
+  -stat xface.btr
+.br
+  <end>
+.TP
+.B "\-copy sourceFile outputFile [-O< owner1 | /PROMPT> [-O<owner2 | /PROMPT>]] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The copy command copies the contents of one formatted data file to 
+another.  Copy retrieves each record in the source data file and inserts it 
+into the output data file.  The record size must be the same in both files.  
+After copying the records, copy displays the total number of records inserted
+into the output data file.
+.IP
+Copy performs the same function as recover and load in a single step.
+.IP
+.B sourceFile 
+is the path name of the data file from which you want to transfer 
+records.
+.IP
+.B outputFile 
+is the path name of the data file into which you want to insert 
+records.  The output data file can contain data or be empty.
+.IP
+.B owner1 
+is the owner name of the sourceFile, if required.
+.IP
+.B owner2 
+is the owner name of the outputFile, if required.
+.TP
+.B "\-create outputFile descriptionFile [< Y | N >] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The create command generates an empty, formatted data file using the 
+characteristics specified in the description file.
+.IP
+.B sourceFile
+is the path name of the formatted data file you wish to create.  If 
+the path name is the name of an existing formatted data file, this command 
+creates a new, empty formatted data file in place of the existing 
+formatted data file.  Any data that was stored in the existing file is lost and 
+cannot be recovered.
+.IP
+.B descriptionFile
+is the path name of the description file containing the specifications for the 
+new formatted data file.
+.IP
+.B Y|N 
+indicates whether to replace an existing file.  If you specify N but a 
+formatted data file with the same name exists, the utility returns an 
+error message and does not create a new file.  The default is Y.
+.TP
+.B "\-drop sourceFile <keyNumber | SYSKEY> [-O<owner | /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The drop command removes an index from a formatted data file and 
+adjusts the key numbers of any remaining indexes, subtracting 1 from each 
+subsequent key number.  If you do not want to renumber the keys, you can add 
+128 to the key number you specify to be dropped. 
+.IP
+.B sourceFile
+is the path name of the formatted data file from which you are dropping the 
+index.
+.IP
+.B keyNumber
+is the number of the index you want to remove.  If you want to preserve the 
+original key numbers, add a 128 bias to the key number you specify.
+.IP
+.B owner
+is the owner name of the sourceFile, if required.
+.TP 
+.B "\-endbu <-A | sourceFile | @listFile > [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The endbu command ends continuous operation on a data file or set of data 
+files previously defined for backup.  Execute this command after you have 
+issued the startbu command and your backup utility has finished running.
+.IP
+To back up data files using continuous operation, first issue the butil -
+startbu command, followed by the data file or set of data files.  Next, run 
+your backup program.  Then, stop continuous operation by using the butil -
+endbu command.
+.IP
+.B -A
+stops continuous operation of all the files defined for the backup.
+.IP
+.B sourceFile
+is the path name of the data file for which you want to end continuous 
+operation.  You must specify a drive letter with the path name.
+.IP
+.B listFile 
+is the name of a text file containing a list of data files for which you want 
+to end continuous operation.  The text file must contain the path name for 
+each data file, and you must separate these path names with a space or end of 
+line marker.  Typically, this list of data files is the same as the list used 
+with the startbu command.
+.TP
+.B "\-index sourceFile indexFile descriptionFile [ -O<owner | /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The index command builds an external index file for an existing 
+formatted data file, based on a field not previously specified as a key in the 
+existing file.  Before you can use the index command, you must create a 
+description file to specify the new key characteristics.  
+.IP
+The records in the new file consist of the following:
+.br
+- The 4-byte address of each record in the existing data file.
+.br
+- The new key value on which you want to sort.
+.IP
+If the key length you specify in the description file is 10 bytes, the record 
+length of the external index file would be 14 bytes (10 plus the 4-byte 
+address).
+.IP
+.B sourceFile
+is the path name of the existing data file for which you want to build an 
+external index.
+.IP
+.B indexFile
+is the path name of the index file in which the MKDE should store the external 
+index.
+.IP
+.B
+descriptionFile
+is the path name of the description file you have created containing the new 
+key definition.  The description file should contain a definition for each 
+segment of the new key.
+.IP
+.B owner
+The owner name for the data file, if required.
+.TP
+.B "\-load unformattedFile outputFile [-O<owner |/PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The load command inserts records from an unformatted input sequential file 
+into a formatted data file.  Load performs no conversion on the data in 
+the input sequential file.  After the utility transfers the records to the 
+data file, it displays the total number of records loaded.
+.IP
+Before running the load command, you must create the input sequential file 
+and the data file.  You can create the input sequential file using a standard 
+text editor or an application; the input sequential file must have the 
+required file format (as explained below).  You can create the data 
+file using either butil -create or butil -clone.
+.IP
+.B unformattedFile
+is the path name of the ASCII sequential file containing the records to be 
+loaded into a data file.
+.IP
+.B outputFile
+is the path name of the data file into which you want to insert the records.
+.IP
+.B owner
+is the owner name for the data file, if required.
+.IP
+Records in the input sequential file must be in the following format:
+.br
+- The first field must be a left-adjusted integer (in ASCII) that provides 
+the length of the record.  This field does not include the end of line 
+markers.  For files with fixed length records, the length you specify should 
+equal the record length of the data file.  For files with variable length 
+records, the length you specify must be at least as long as the minimum fixed 
+length of the data file.
+.br
+- A separator (either a comma or a blank) must follow the length field.
+.br
+- The record data follows the separator.  The length of the data must be the 
+exact number of bytes specified by the length field.
+.br
+- An end of line marker must terminate each line.  The end of line marker is 
+not included in the length value at the beginning of the line.    
+.TP
+.B "\-recover sourceFile unformattedFile [-O<owner |/PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The recover command extracts data from a formatted data file and places it 
+in a sequential file that has the same format as the input sequential file 
+used by the load command.  This command is often useful for extracting some 
+or all of the data from a damaged formatted data file.  The recover 
+command may be able to retrieve many, if not all, of the file's records.  You 
+can then use the load command to insert the recovered records into a new, 
+undamaged formatted data file.
+.IP
+.B sourceFile
+is the path name of the data file from which you want to recover data.
+.IP
+.B unformattedFile
+is the path name of the ASCII sequential file where the utility should store 
+the recovered records.
+.IP
+.B owner
+is the owner name for the data file, if required.
+.TP
+.B "\-rollfwd <sourceFile | volume | drive | @listFile> [<-L[dumpFile] | -W[dumpFile]> [-T<dataLength>] 
+[-E<keyLength>] [-H] [-V] [-O<ownerList | owner> | /PROMPT]][-A] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The rollfwd commands recovers changes made to a data file between the time of 
+the last backup and a system failure.  The MKDE stores the changes in a log.  
+If a system failure occurs, you can restore the backup copy of your data file 
+and then use the rollfwd command, which applies all changes stored in the log 
+to your backup copy.
+.TP 
+.B "\-save sourceFile unformattedFile"
+.B "[Y indexFile | N <keyNumber | -1>] [-O<owner1 | /PROMPT> [-O<owner2 | /PROMPT>]] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The save command retrieves records from a formatted data file using 
+the specified index path and places them in a sequential file that is 
+compatible with the required format for the load command.  Save generates a 
+single record in the output sequential file for each record in the input data 
+file.  Upon completion, save displays the total number of records saved.
+.IP
+The Maintenance Utility performs no conversion of the data in the records.  
+Therefore, if you use a text editor to modify an output file containing 
+binary data, be aware that some text editors may change the binary data, 
+causing the results to be unpredictable.
+.IP
+.B sourceFile
+is the path name of the data file containing the records you want to 
+save.
+.IP
+.B unformattedFile
+is the path name of the output file, which is an ASCII sequential file, in 
+which you want the utility to store the records.
+.IP
+.B indexFile
+is the path name of the external index file by which you want to save records 
+if you do not want to save records using the default of the lowest key 
+number.
+.IP
+.B keyNumber
+is the key number (other than 0) by which you want to save records if you do 
+not want to save records using the default of the lowest key number.
+.IP
+.B -1
+is the specification for saving the records in physical order using the 
+Step operations.
+.IP
+.B owner
+is the owner name for the sourceFile, if required.
+.TP 
+.B "\-setowner sourceFile -O<owner | /PROMPT>  level -L  [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The setowner command creates an owner for a formatted data file.
+.IP
+.B sourceFile
+is the path name of the Btrieve data file.
+.IP
+.B owner
+is the owner name to be set.
+.IP
+.B level
+is the type of access restriction for the data file.  The possible values for 
+this parameter are as follows:
+.IP 
+.B 0
+\- Requires an owner name for any access mode (no data encryption).
+.IP 
+.B 1
+\- Permits read access without any owner name (no data encryption).
+.IP
+.B 2 
+\- Requires an owner name for any access mode (with data encryption).
+.IP 
+.B 3 
+\- Permits read access without an owner name (with data encryption).
+.IP 
+.B -L
+designates a long owner name. Owner names are case-sensitive and can be short or long. A short owner name can be up to 8 bytes long. The length of a long owner name depends on the file format. Due to stronger encrypting of owner name strings in Zen v14, a 13.0 format file assigned a long owner name in Zen v14 can be read only in Zen v14. This applies whether or not the file itself is encrypted. Files in 9.5 format do not have the stronger encrypting and are not affected. Zen before version 10.10 does not support long owner names and cannot read files that have them. A file can be rebuilt to a file format before 9.5 only after the owner name is removed. 
+.IP
+.TP
+.B "\-sindex sourceFile <descriptionFile | SYSKEY> "
+.B "[keyNumber] [-Oowner| /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The sindex command creates an additional index for an existing 
+formatted data file.  The key number of the new index is one higher than the 
+previous highest key number of the data file.  An exception is if a drop 
+command previously removed an index without renumbering the remaining keys, 
+thus producing an unused key number. In this case, the new index receives 
+the first unused number.
+.IP
+Before you can use the sindex command, you must create a description file to 
+key specifications for the index.
+.IP
+.B sourceFile
+is the path name of the data file for which you are creating the 
+index.
+.IP
+.B descriptionFile
+is the path name of the description file containing the description of the 
+index you want to create.
+.IP
+.B keyNumber 
+is the key number (other than 0) by which you want to save records if you do 
+not want to save records using the default of the lowest key number.
+.IP
+.B owner
+is the owner name for the data file, if required.
+.TP
+.B "\-startbu <sourceFile | @listFile> [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The startbu command places a file or set of files into continuous operation 
+for backup purposes. 
+.IP
+To back up files using continuous operation, first issue the 
+\fIbutil -startbu\fR command, followed by the data file or set of data files.
+Next, run your backup program.  Then issue the butil -endbu command to stop 
+continuous operation.
+.IP
+When you place a data file into continuous operation mode, the MKDE creates a 
+temporary file with the same name as the data file, but with a .^^^ 
+extension.  Therefore, do not create multiple data files with the same names 
+but different extensions.  For example, do not use a naming scheme such as 
+INVOICE.HDR and INVOICE.DET for your data files.
+.IP
+.B sourceFile
+is the path name of the data file on which to begin continuous operation for 
+backup.  
+.IP
+.B listFile
+is the name of a text file containing the path names of files on which to 
+begin continuous operation.  Separate these path names with a space or end of 
+line marker.  
+.TP
+.B "\-stat sourceFile [-Oowner| /PROMPT>] [-UIDuname -PWDpword [-DBdbname]]"
+.IP
+The stat command reports the defined characteristics of a data file and 
+statistics about the file's contents.
+.IP
+.B sourceFile
+is the path name of the data file on which to you want to display statistics.
+.IP
+.B owner
+is the owner name of the data file, if required.
+.TP
+.B "\-ver"
+.IP
+The ver command returns the version number of the MKDE loaded at the server.
+.P
+.SH EXAMPLES
+The following command creates a formatted data file named patients.btr 
+using the description provided in the BUILD.dsc description file.
+.P
+.B % butil -create patients.btr BUILD.dsc
+.P
+The following command copies the records in patients.btr to newpats.btr.  The 
+patients.btr input file does not require an owner name, but the newpats.btr 
+output file uses the owner name Pam.
+.P
+.B % butil -copy patients.btr newpats.btr -O -OPam
+.P
+The following command creates the newapp.btr file by cloning the patients.btr 
+file.
+.P
+.B % butil -clone newapp.btr patients.btr
+.P
+The following command clears the owner name for the newpats.btr.  The owner 
+name for the file newpats.btr is Pam.
+.P
+.B % butil -clrowner patients.btr -OPam
+.P
+The following command sets a long owner name for data file humnrsrs.mkd to hrAdmin945k7YYsvr with a 
+restriction level of 1.
+.P
+.B % butil -setowner humnrsrs.mkd -OhrAdmin945k7YYsvr -L 1
+.P
+The following command creates an external index file called newpats.idx using 
+a data file called patients.btr.  The patients.btr file does not require an 
+owner name.  The description file containing the definition for the new key 
+is called NEWidx.dsc
+.P
+.B % butil -index patients.btr newpats.idx NEWidx.dsc 
+.P
+The description file shown defines a new key with one segment.  The key 
+begins at byte 30 of the record and is 10 bytes long.  It enables duplicates, 
+is modifiable, is a string type, and uses no alternate collating sequences.
+
+  position=30 length=10 duplicates=y modifiable=y
+  type=string alternate=n segment=n
+
+The following two examples illustrate how to use the save command to retrieve 
+records from a data file.
+.P
+The first example uses the newpats.idx external index file to retrieve 
+records from the patients.btr data file and store them in an unformatted text 
+file called patients.sav
+.P
+.B % butil -save patients.btr patsnew.sav Y newpats.idx
+.P
+The next example retrieves records from the patients.btr file using key 
+number 3 and stores them in an unformatted text file called patsnew.sav.
+.P
+.B % butil -save patients.btr patsnew.sav N 3
+.P
+The following example loads sequential records from patsadd.adr file into 
+the patients.btr file.  The owner name of the ppatientsatients.btr file is Sandy.
+.P
+.B % butil -load patsadd.adr patients.btr -OSandy
+.P
+The following example adds an index to the patients.btr file.  The name of 
+the description file is suppidx.dsc.  The owner name of patients.btr is Ron.
+.P
+.B % butil -sindex patients.btr suppidx.dsc -ORon
+.P
+.SH "SEE ALSO"
+mkded(1)
+.P
+.I Advanced Operations Guide
+describes the Maintenance utility in detail.
+

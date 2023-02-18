@@ -60,6 +60,10 @@ axelor {
 }
 
 dependencies {
+  implementation files('actianzen/lib/jpscs.jar')
+  implementation files('actianzen/lib/psql.jar')
+  implementation files('actianzen/lib/pvjdbc2.jar')
+  implementation files('actianzen/lib/pvjdbc2x.jar')
   gradle.appModules.each { dir ->
     implementation project(":modules:$dir.name")
   }
