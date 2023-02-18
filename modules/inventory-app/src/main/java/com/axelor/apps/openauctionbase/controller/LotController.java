@@ -3,6 +3,7 @@ package com.axelor.apps.openauctionbase.controller;
 import com.axelor.apps.openauction.db.MissionLine;
 import com.axelor.apps.openauction.db.PictureAttachement;
 import com.axelor.apps.openauctionbase.service.LotService;
+import com.axelor.apps.openauctionbase.service.TestJDBC;
 import com.axelor.exception.service.TraceBackService;
 import com.axelor.inject.Beans;
 import com.axelor.meta.schema.actions.ActionView;
@@ -14,8 +15,9 @@ public class LotController {
 
     try {
 
+      TestJDBC.test();
       MissionLine missionLine = request.getContext().asType(MissionLine.class);
-      String picturePath = missionLine.getId().toString();
+      
       LotService lotService = Beans.get(LotService.class);
       PictureAttachement pictureAttachement = lotService.addPicture(missionLine);
 
