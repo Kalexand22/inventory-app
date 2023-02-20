@@ -3,6 +3,7 @@ package com.axelor.apps.openauctionbase.service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 public class TestJDBC {
@@ -17,9 +18,11 @@ public class TestJDBC {
 
       ResultSet rs = stmt.executeQuery("SELECT * FROM requisitions");
       String tmp = "";
+      ResultSetMetaData metadata = rs.getMetaData();
       while (rs.next()) {
         tmp = rs.getString(1);
-        tmp = rs.getString(2);
+        tmp = metadata.getColumnName(1);
+        tmp = tmp;
       }
 
       rs.close();

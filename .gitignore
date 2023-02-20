@@ -82,3 +82,10 @@ node_modules
 # Axelor
 src/main/resources/application.properties
 settings.gradle
+
+
+# ACTIAN ZEN PSQL
+!jpscs.jar
+!psql.jar
+!pvjdbc2.jar
+!pvjdbc2x.jar
