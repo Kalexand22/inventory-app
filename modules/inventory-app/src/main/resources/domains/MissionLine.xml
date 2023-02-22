@@ -34,6 +34,9 @@
    
     <one-to-many name="pictureList" ref="com.axelor.apps.openauction.db.PictureAttachement"
       mappedBy="sourceMissionLine"/> 
+
+    
+    <entity-listener class="com.axelor.apps.openauctionbase.listener.MissionLineListener" />
   </entity>
 
 </domain-models>
