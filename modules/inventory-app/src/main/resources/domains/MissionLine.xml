@@ -11,29 +11,28 @@
     <string name="description" title="Désignation"/>
    
     <integer name="lotStatus" title="Statut lot" selection="openauction.lotStatus.select"/>
-    <decimal name="quantity" title="Quantité"/>
-    
-    <many-to-one name="lotCondition" title="Condition lot"
-      ref="com.axelor.apps.openauction.db.LotCondition"/>
-                  
-    <boolean name="canceled" title="Annulé"/>
-    <many-to-one name="canceledReason" title="Motif Annulation"
-      ref="com.axelor.apps.openauction.db.CanceledReason"/>
-    
-    <many-to-one name="lotNatureCode" title="Nature lot"
-      ref="com.axelor.apps.openauction.db.LotNature"/>
-     <many-to-one name="location" title="Emplacement"
-      ref="com.axelor.apps.openauction.db.Location"/>
+    <string name="locationString" title="Emplacement"/>
+    <many-to-one name="category" title="Catégorie"
+    ref="com.axelor.apps.openauction.db.Category"/>
                   
                   
     <decimal name="lowEstimate" title="Estimation basse"/>
-
     <decimal name="highEstimate" title="Estimation haute"/>
 
     <string name="inventoryComment" title="Commentaire inventaire"/>
+
+    <many-to-one name="lotNatureCode" title="Nature lot"
+      ref="com.axelor.apps.openauction.db.LotNature"/>
+    <many-to-one name="lotCondition" title="Condition lot"
+      ref="com.axelor.apps.openauction.db.LotCondition"/>
+    <decimal name="quantity" title="Quantité"/>
+    <boolean name="canceled" title="Annulé"/>
+    <many-to-one name="canceledReason" title="Motif Annulation"
+        ref="com.axelor.apps.openauction.db.CanceledReason"/>
    
     <one-to-many name="pictureList" ref="com.axelor.apps.openauction.db.PictureAttachement"
       mappedBy="sourceMissionLine"/> 
+
   </entity>
 
 </domain-models>

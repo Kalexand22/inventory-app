@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 @RunWith(GuiceRunner.class)
-@GuiceModules({MyModule.class})
+//@GuiceModules({MyModule.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class STTest {
 

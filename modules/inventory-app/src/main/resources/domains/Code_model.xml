@@ -30,4 +30,9 @@
     <string name="code" title="Code"/>
     <string name="description" title="Description" namecolumn="true"/>
   </entity>
+
+  <entity name="Category">
+    <string name="code" title="Code"/>
+    <string name="description" title="Description" namecolumn="true"/>
+  </entity>
 </domain-models>
