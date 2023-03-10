@@ -65,6 +65,11 @@ dependencies {
   }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 task("dataImport", type: JavaExec) {
   main = "com.axelor.apps.erp.Main"
   classpath = sourceSets.main.runtimeClasspath
