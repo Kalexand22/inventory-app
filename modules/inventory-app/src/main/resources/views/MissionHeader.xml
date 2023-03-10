@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+    <grid name="mission-header-grid" title="Mission line" model="com.axelor.apps.openauction.db.MissionLine" width="large">
+        <toolbar>
+            <button name="loadMissionHeader" title="Charger les dossiers d'inventaires" onClick="action-load-mission-header" colSpan="2"/>
+        </toolbar>
+        <field name="no"></field>
+        <field name="description"></field>
+    </grid> 
+  
+    <action-method name="action-load-mission-header">
+        <call class="com.axelor.apps.openauctionbase.controller.MissionHeaderController" method="loadMissionHeader"/>
+    </action-method>
+</object-views>

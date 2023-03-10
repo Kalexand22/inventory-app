@@ -8,17 +8,17 @@ import com.axelor.rpc.ActionResponse;
 
 public class MissionHeaderController {
 
-    public void loadMissionHeader(ActionRequest request, ActionResponse response) {
+  public void loadMissionHeader(ActionRequest request, ActionResponse response) {
 
-        try {
-    
-          EncheresJDBC lotService = Beans.get(EncheresJDBC.class);
-          lotService.selectDossierInv();
-    
-          response.setReload(true);
-    
-        } catch (Exception e) {
-          TraceBackService.trace(response, e);
-        }
-      }
+    try {
+
+      EncheresJDBC lotService = Beans.get(EncheresJDBC.class);
+      lotService.selectDossierInv();
+
+      response.setReload(true);
+
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
 }
