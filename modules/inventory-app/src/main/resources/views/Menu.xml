@@ -54,4 +54,10 @@
     <view type="form" name="picture-attachement-form" />
   </action-view>
 
+  <menuitem name="menu-metafile" parent="menu-mission" title="Liste des metafile" action="metafile.all"/>
+  <action-view name="metafile.all" title="Metafiles" model="com.axelor.meta.db.MetaFile">
+    <view type="grid" name="meta-files-grid"/>
+    <view type="form" name="meta-files-form"/>
+  </action-view>
+
 </object-views>
